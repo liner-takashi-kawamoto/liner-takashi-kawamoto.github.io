@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://mochan-tk.github.io",
+  "updated": "2024-08-26T06:06:00Z",
+  "id": "handson-azure-ai-for-beginner",
+  "duration": 155,
+  "title": "Azure AI ハンズオン（オプションでハッカソンで使えるLINE Bot開発手順付き）",
+  "authors": "Takashi Kawamoto.",
+  "summary": "Azure AIのハンズオンです。（オプションでハッカソンに使えるLINE Botの手順も用意しています）",
+  "source": "1FWs2vll9_rfuyrXZj5JjX8oS8seMDhjL4ri2OjPN-5Q",
+  "theme": "microsoft",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "microsoft"
+  ],
+  "tags": [],
+  "url": "handson-azure-ai-for-beginner"
+}

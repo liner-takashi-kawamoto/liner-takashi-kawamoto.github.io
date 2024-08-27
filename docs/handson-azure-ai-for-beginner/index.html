@@ -1,0 +1,382 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Azure AI ハンズオン（オプションでハッカソンで使えるLINE Bot開発手順付き）</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://mochan-tk.github.io/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="" ga4id=""></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  codelab-ga4id=""
+                  id="handson-azure-ai-for-beginner"
+                  title="Azure AI ハンズオン（オプションでハッカソンで使えるLINE Bot開発手順付き）"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="はじめに" duration="5">
+        <h2 is-upgraded>概要</h2>
+<p>MicrosoftのAIエコシステム、AIの統合開発環境プラットフォームであるAzure AI の使い方を学ぶ初心者向けのハンズオンです。</p>
+<h2 is-upgraded>当日の持ち物</h2>
+<ul>
+<li>ブラウザ（Microsoft Edge, Chromeを推奨）がインストールされたPC</li>
+<li>LINEがインストール済みのスマホ</li>
+</ul>
+<h2 is-upgraded>事前準備</h2>
+<ul>
+<li>Microsoft Azureのアカウント作成</li>
+<li><a href="https://github.com/join?source=header" target="_blank">GitHubアカウント</a>作成（GitHub Codespacesを利用）</li>
+<li>LINEアカウント作成(<a href="https://developers.line.me/console/" target="_blank">こちらのサイト</a>でログインできるかどうかを確認ください)</li>
+</ul>
+<h2 is-upgraded>使用するサービス・ツール</h2>
+<ul>
+<li>Microsoft Azure、Azure AI Studio</li>
+<li>GitHub Codespaces（言語は Node.js使います）</li>
+<li>LINE API（Messaging API）</li>
+</ul>
+<h2 is-upgraded>注意事項</h2>
+<p>若干、クラウド(Microsoft Azure)の課金が発生します。それ以外は課金など発生しません。最後に本日作成したクラウドのサービスリソースは削除をお願いいたします。</p>
+<h2 is-upgraded>参考情報（本資料では扱わない中級レベルの内容）</h2>
+<ul>
+<li><a href="https://youtu.be/HFN0Uq4RM2w?si=k1g6WKfuDBMIB3zI" target="_blank">マルチモーダル＆マルチエージェントを活用した生成 AI アプリケーション開発</a></li>
+<li><a href="https://youtu.be/gpfRR4QVE6Q?si=o_Kfc9Sbh6d8r23j&t=667" target="_blank">Microsoftが提供するAIの安全性ソリューション（Responsbile AI）</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Azure AI Studio を使い始める" duration="10">
+        <h2 is-upgraded>Azure AI Studioでプロジェクトの作成</h2>
+<ol type="1" start="1">
+<li><a href="https://ai.azure.com/" target="_blank">Azure AI Studio のホーム ページ</a>に移動します。</li>
+<li>（サインインしていない場合はサインインします。）</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/5d9c55c3662fdd73.png"></p>
+<ol type="1" start="3">
+<li>[+ 新しいプロジェクト] を選択します。</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/64d3babcdb8f5a89.png"></p>
+<ol type="1" start="4">
+<li>プロジェクトの 作成を行います。プロジェクト名（例：prj-handson-20240826） &gt; 新しいハブの作成 &gt; 「次へ」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/f3a6832195aa945.png"></p>
+<ol type="1" start="5">
+<li>ハブ名（例：hub-handson-20240826） &gt; サブスクリプション（基本はデフォルトで選択されてるものを使用） &gt; 新しいリソースグループの作成（例：rg-handson-20240826） &gt; 場所は East USを選択 &gt; Azure AIサービスの接続（基本はデフォルトで選択されているものを使用） &gt; 新しい AI Searchの作成（例：ai-search-20240826） &gt; 「次へ」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/d41d15f217f2e5dd.png"></p>
+<ol type="1" start="6">
+<li>レビューして &gt; 「プロジェクトを作成する」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/dd9e673426894acf.png"></p>
+<p>しばらくするとプロジェクトが作成され、画面が表示されます。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/f67d58f97d1eae5b.png"></p>
+<aside class="warning"><p><strong>注意</strong>：プロジェクトの作成は少々時間がかかります。</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Azure OpenAI のモデルを使う" duration="10">
+        <h2 is-upgraded>GPT-4oのモデルをデプロイ</h2>
+<ol type="1" start="1">
+<li>左サイドメニューから。 デプロイ &gt; +モデルのデプロイ &gt; 基本モデルをデプロイする</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/b22edce654ca7664.png"></p>
+<ol type="1" start="2">
+<li>gpt-4oのモデル選択 &gt; 「確認」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/f771c4baaa15d964.png"></p>
+<ol type="1" start="3">
+<li>（基本的にはデフォルトで入力されている情報のままで）&gt; 1分あたりのトークンレート制限 50kに変更  &gt; 「デプロイ」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/6e567c5870780301.png"></p>
+<ol type="1" start="4">
+<li>「プライグラウンドで開く」ボタン &gt; プレイグラウンドに移動します。</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/193d20a701aed282.png"></p>
+<aside class="warning"><p><strong>注意</strong>：モデルをデプロイしてからモデルを使えるようになるまでに数分時間がかかる可能性があります。</p>
+</aside>
+<h2 is-upgraded>プレイグラウンドでモデルを使う</h2>
+<ol type="1" start="1">
+<li>チャット セッション にメッセージなどを入力して、モデルの挙動を確認してみてください。</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/b79a213535ea5568.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="生成AIのRAGを体験" duration="35">
+        <h2 is-upgraded>RAGを行う準備</h2>
+<ol type="1" start="1">
+<li>セットアップ領域から、データを追加するタブ選択 &gt; 「+新しいデータソースを追加する」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/58a2f59951775947.png"></p>
+<ol type="1" start="2">
+<li>データを追加する設定画面から、 データソース：ファイルのアップロード選択</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/2c7575cbf1e50342.png"></p>
+<ol type="1" start="3">
+<li>今回使用する<a href="https://github.com/mochan-tk/Handson-Azure-AI-for-Beginner-with-LINE-Bot/blob/main/rag_data/customer_1.md" target="_blank">データファイルをダウンロード</a> してください &gt; ファイルのアップロードから先ほどダウンロードしたファイルをアップロード</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/c59eeedb6561197e.png"></p>
+<ol type="1" start="4">
+<li>「次へ」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/a0f62992b9b4453.png"></p>
+<ol type="1" start="5">
+<li>Azure AI Searchの選択、「他のAzure AI Search リソースを接続する」を選択</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/d1a524c9d1b0ac65.png"></p>
+<ol type="1" start="6">
+<li>デフォルトで１つ接続先が表示されているので、「接続を追加する」ボタンを押して接続</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/59898f34a9004eec.png"></p>
+<ol type="1" start="7">
+<li>インデックス名を設定（例：index-20240826） &gt; 「次へ」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/5dc8de1b5b86f491.png"></p>
+<ol type="1" start="8">
+<li>（基本的にはデフォルトの設定のまま） &gt; 「次へ」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/3a44f2de3f2c6519.png"></p>
+<ol type="1" start="9">
+<li>設定内容を確認して「作成」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/c09c7aca229ae94b.png"></p>
+<aside class="warning"><p><strong>注意</strong>：「作成」ボタンを押した後は、処理の完了まで少々時間がかかります。</p>
+</aside>
+<h2 is-upgraded>RAG (Retrieval-Augmented Generation) を用いたチャットを体験する</h2>
+<ul>
+<li>外部情報（先ほど追加したデータ）を用いて、回答の精度が向上していることを確認します。</li>
+</ul>
+<p class="image-container"><img style="width: 601.70px" src="img/f6a7131d231446b2.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="（オプション）生成AIのチャットWebアプリをデプロイする" duration="20">
+        <h2 is-upgraded>下記の公式ドキュメントを参考に実施してみてください</h2>
+<p><a href="https://learn.microsoft.com/ja-jp/azure/ai-studio/tutorials/deploy-chat-web-app#deploy-your-web-app" target="_blank">https://learn.microsoft.com/ja-jp/azure/ai-studio/tutorials/deploy-chat-web-app#deploy-your-web-app</a></p>
+<h2 is-upgraded>（参考）上記の公式ドキュメントの流れを一部記載していきます</h2>
+<ol type="1" start="1">
+<li>画面上部のメニューから、 「Deploy」を選択 &gt; 「..as a web app」を選択</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/ab6d808bfef45a8.png"></p>
+<ol type="1" start="2">
+<li>チャット webアプリの名前を入力（例：app-chat-20240826） &gt; サプスクリプション（本日使っているものを選択） &gt; リソースグループ（本日作成したリソースグループを選択、例：rg-handson-20240826） &gt; 場所（例：East US）を選択 &gt; 価格プラン「Basic (B1)」を選択</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/464c247cae10a014.png"></p>
+<ol type="1" start="3">
+<li>「起動」ボタン</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/8a1990661daa3bf.png"></p>
+<ol type="1" start="4">
+<li>アクセス許可の同意画面が出るので、「承諾」ボタンで承諾します</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/c9a1a2aea538ec93.png"></p>
+<ol type="1" start="5">
+<li>最終的には下記のようなWebアプリが展開されます（問題が発生する場合は公式のドキュメントの手順を確認してみてください）</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/512dd6541bd97330.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="（オプション）Prompt flowツールでAIエージェントを作成する" duration="10">
+        <h2 is-upgraded>下記の公式ドキュメントを参考に実施してください</h2>
+<p><a href="https://learn.microsoft.com/ja-jp/azure/ai-studio/tutorials/deploy-copilot-ai-studio" target="_blank">https://learn.microsoft.com/ja-jp/azure/ai-studio/tutorials/deploy-copilot-ai-studio</a></p>
+<h2 is-upgraded>（参考）上記の公式ドキュメントの手順を実施すると、下記のような画面が表示されていきます。これがPrompt flowというツールです。</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/8c049dc39331a554.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/3886bff4a67817ed.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/850a256f23d75dd3.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="（オプション）LINEのチャットボットのアプリを作る：Messagin API チャネルの作成" duration="10">
+        <h2 is-upgraded>【参考】この章の解説動画</h2>
+<p><a href="https://youtu.be/ITCOhiyn6LY?si=4Qopuscd4Xc_Nsku&t=51" target="_blank">https://youtu.be/ITCOhiyn6LY?si=4Qopuscd4Xc_Nsku&amp;t=51</a></p>
+<h2 is-upgraded>LINE Developersサイトにアクセス</h2>
+<p><a href="https://developers.line.me/ja/services/messaging-api/" target="_blank">https://developers.line.me/ja/services/messaging-api/</a> にアクセス。<br>「今すぐはじめよう」のボタンを押してください。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/a5c5a231b4503167.png"></p>
+<p>「LINEアカウントでログイン」を押してください。</p>
+<p class="image-container"><img style="width: 421.15px" src="img/d5d421a6b299e62b.png"></p>
+<p>LINEのログインを求められるのでログインしてください。</p>
+<p class="image-container"><img style="width: 461.50px" src="img/53764d1928b87a53.png"></p>
+<h2 is-upgraded>チャネルの種類</h2>
+<p>Messaging APIになっているか確認します。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/df3af770985c3f97.png"></p>
+<h2 is-upgraded>プロバイダ</h2>
+<p>既にプロバイダーを作っている場合 → 利用するプロバイダーを選択します。</p>
+<p><img style="width: 601.70px" src="img/d5302f954b527b82.png"><br>初めて → 新規プロバイダー作成を選択しプロバイダー名を入力します。</p>
+<p>（LINEという文字は含められません。）</p>
+<p class="image-container"><img style="width: 601.70px" src="img/ed9832698ea66cc2.png"></p>
+<h2 is-upgraded>会社・事業者の所在国・地域</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/57aa97698a2fec50.png"></p>
+<h2 is-upgraded>チャネルアイコン</h2>
+<p>チャネルアイコンを登録します。（今回は必須ではありません）</p>
+<p class="image-container"><img style="width: 601.70px" src="img/b25e887321903ca7.png"></p>
+<h2 is-upgraded>チャネル名、チャネル説明</h2>
+<p>下記を入力します。</p>
+<p>チャネル名：「HandsonBot」</p>
+<p>チャネル説明：「HandsonBotです。」</p>
+<p class="image-container"><img style="width: 601.70px" src="img/f4ec1d14f0d71421.png"></p>
+<h2 is-upgraded>大業種、小業種</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/ed9b424f40f943e3.png"></p>
+<h2 is-upgraded>メールアドレス、プライバシーポリシーURL、サービス利用規約URL</h2>
+<p>メールアドレスを確認します。</p>
+<p>プライバシーポリシーURLとサービス利用規約URLは入力しなくても大丈夫です。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/4912ddf28b5920c5.png"></p>
+<h2 is-upgraded>作成ボタン</h2>
+<p>下記２点の利用規約にチェックをして「作成」ボタンを押します。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/1b112e894430dc9f.png"></p>
+<p>「OK」を押します。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/6151acd3510ea8dd.png"></p>
+<p>「同意する」を押します。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/e87adc9a93775ef.png"></p>
+<h2 is-upgraded>LINE公式アカウント(LINE Bot)と友だちになる</h2>
+<p>QRコードで友だち追加</p>
+<p>「Messaging API設定」タブに移動し、QRコードを読み取って、友だち追加をします。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/1868e4298aafce8.png"></p>
+<h2 is-upgraded>チャネルシークレット、アクセストークンの取得</h2>
+<p>「チャネル基本設定」タブからチャネルシークレットを、「Messaging API設定」タブからアクセスキーをそれぞれ取得します。</p>
+<ul>
+<li>チャネルシークレット</li>
+</ul>
+<p class="image-container"><img style="width: 601.70px" src="img/f3eb6548a6c5e0c6.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/aeece43ae5e06e73.png"></p>
+<ul>
+<li>アクセストークン</li>
+</ul>
+<p class="image-container"><img style="width: 601.70px" src="img/c0731f4e918e06da.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/3ea1abd939970269.png"></p>
+<aside class="special"><p><strong>Note:</strong></p>
+<p>・チャネルシークレット：Botサーバで受信したリクエストが不正なものでないかのチェックで使用される(LINE以外のサーバーからリクエストが送られていないかの確認)</p>
+<p>・ アクセストークン：LINEのAPI(機能)を実行する際に、認可が通り利用権限があることを証明するトークン</p>
+</aside>
+<h2 is-upgraded>応答モードをOFFにする</h2>
+<p>LINE Official Account Manager 画面にアクセスして、Botの「応答モード」設定をOFFにします。（デフォルトの設定はONになっており、メッセージを送るたびにデフォルトのメッセージが返ってきてしまうため）</p>
+<p class="image-container"><img style="width: 601.70px" src="img/eaa773a4f9e436e6.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/717aa226af841e8e.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="（オプション）LINEのチャットボットのアプリを作る：開発環境でチャットボットを動かす" duration="15">
+        <h2 is-upgraded>GitHub リポジトリのFork</h2>
+<p><a href="https://github.com/mochan-tk/Handson-Azure-AI-for-Beginner-with-LINE-Bot" target="_blank">https://github.com/mochan-tk/Handson-Azure-AI-for-Beginner-with-LINE-Bot</a> にアクセス。</p>
+<p>右上のForkボタンを押して自分のGitHubアカウントにリポジトリをコピーしてください。</p>
+<h2 is-upgraded><img style="width: 601.70px" src="img/f7ba0b70308dac53.png"></h2>
+<p>Ownerを自分のアカウントに選択し、「Create fork」ボタンを押してforkしてください。</p>
+<h2 is-upgraded><img style="width: 601.70px" src="img/426bccf1dd25d3a1.png"><br>GitHub Codespacesの起動<br>fork後、緑色のCodeボタン &gt; Create codespace on main ボタン を押して起動します</h2>
+<p class="image-container"><img style="width: 601.70px" src="img/e81b50c476cde2b7.png"></p>
+<h2 is-upgraded>Port Foward設定とURLの取得</h2>
+<p>表示範囲を ポートの表示範囲 &gt;  Publicに変更します。</p>
+<p>ローカルアドレス &gt; コピーマーク を押してURLを取得しておきます。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/516a967bff2f494f.png"></p>
+<h2 is-upgraded>Botサーバーの用意</h2>
+<p>ターミナル上で下記のコマンドを実行していってください。</p>
+<ul>
+<li>実行するコマンド</li>
+</ul>
+<pre><code>cd local
+
+npm install
+
+export CHANNEL_ACCESS_TOKEN=&lt;your access token&gt;
+export CHANNEL_SECRET=&lt;your secret key&gt;
+export BASE_URL=&lt;Port Foward設定で取得したURL&gt;
+
+node index.js</code></pre>
+<h2 is-upgraded>Webhookの設定</h2>
+<p>LINE Developersのコンソール画面に戻って、「Messaging API設定」タブから上記で取得したURL + 「/callback」を設定します。これでLINEのBotを動かす準備は全て整いました。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/c0731f4e918e06da.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/97626cb533f3757e.png"></p>
+<p class="image-container"><img style="width: 601.70px" src="img/4b8f4d3ce14c1c38.png"></p>
+<h2 is-upgraded>動作確認</h2>
+<p>さっそく動かしてみましょう。トーク画面からBotに対してメッセージを送るとオウム返しでメッセージが送られてきたと思います。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/a3f90492ee08e11b.jpeg"></p>
+<h2 is-upgraded>（参考）Messaging APIの他の機能を体験したい場合は下記のドキュメントを参照</h2>
+<ul>
+<li><a href="https://mochan-tk.github.io/handson-line-bot-azure-github-aoai-nodejs-v1/#0" target="_blank">https://mochan-tk.github.io/handson-line-bot-azure-github-aoai-nodejs-v1/#0</a> &gt;（５〜８章を参考にしてください）                        </li>
+</ul>
+<h2 is-upgraded>Azure OpenAIのモデルをチャットボットのアプリで使う</h2>
+<p>ターミナル上で下記のコマンドを実行していってください。</p>
+<ul>
+<li>実行するコマンド</li>
+</ul>
+<pre><code>cd local
+
+npm install
+
+export CHANNEL_ACCESS_TOKEN=&lt;your access token&gt;
+export CHANNEL_SECRET=&lt;your secret key&gt;
+export BASE_URL=&lt;Port Foward設定で取得したURL&gt;
+export AZURE_OPENAI_KEY=&lt;&gt;
+export AZURE_OPENAI_ENDPOINT=&lt;&gt;
+export AZURE_OPENAI_DEPLOYMENT_NAME=&lt;&gt;
+
+node index_chatgpt.js
+</code></pre>
+<h2 is-upgraded>動作確認</h2>
+<p>さっそく動かしてみましょう。AIから優れた応答が返ってきたのではないでしょうか。<img style="width: 601.70px" src="img/ce275d88ac5ea4de.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="（オプション）LINEのチャットボットのアプリを作る：本番環境でチャットボットを動かす" duration="15">
+        <h2 is-upgraded>現在は工事中..</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="（オプション）LIFFアプリの開発を体験する" duration="20">
+        <h2 is-upgraded>LIFFスターターを使って既存のWebアプリをLIFFアプリにコンバートする流れをつかもう！</h2>
+<ul>
+<li>下記の動画をご覧ください</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=7cqPvF4GGAM" target="_blank">https://www.youtube.com/watch?v=7cqPvF4GGAM</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="リソースの削除" duration="5">
+        <p>作成したリソースをそのままにすると課金が発生し続けるので、必ずリソースの削除を行ってください。</p>
+<ol type="1" start="1">
+<li>画面右上のプロジェクト名が表示されている部分をクリック &gt; 展開された領域からリソースグループのリンクをクリック</li>
+</ol>
+<h3 is-upgraded><img style="width: 601.70px" src="img/f2dd82caeb589aea.png"></h3>
+<ol type="1" start="2">
+<li>表示されたリソースグループの管理画面から、画面上部のメニューにある「Delete resource group」でリソースグループごと削除を実施してください。（リソースグループ配下のリソースもまとめて削除されます）</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="img/96e5fe550a6fea57.png"></p>
+<aside class="warning"><p><strong>注意</strong>：リソースグループの削除には少々時間がかかります。必ず全て消えたことを確認してください。（課金が高額になった場合の保証はできかねます）</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://mochan-tk.github.io/claat-public/native-shim.js"></script>
+  <script src="https://mochan-tk.github.io/claat-public/custom-elements.min.js"></script>
+  <script src="https://mochan-tk.github.io/claat-public/prettify.js"></script>
+  <script src="https://mochan-tk.github.io/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
