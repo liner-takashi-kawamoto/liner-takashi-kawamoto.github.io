@@ -43,4 +43,4 @@ gitbook build ./GitBook docs/gitbook-test
 - https://mochan-tk.github.io/gitbook-test/
 - https://liff.line.me/1656670753-P63Wz9pO (https://mochan-tk.github.io/liff-starter)
 - https://mochan-tk.github.io/handson-derta-gig-aoai/#0 
-- https://mochan-tk.github.io/handson-azure-ai-for-beginner
+- https://liner-takashi-kawamoto.github.io/handson-azure-ai-for-beginner
